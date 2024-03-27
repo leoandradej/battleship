@@ -1,0 +1,204 @@
+.game-boards-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.game-board {
+    margin: 2vmin;
+    display: grid;
+    background-color: hsl(200, 100%, 50%);
+    grid-template-rows: repeat(10, 4.6vmin);
+    grid-template-columns: repeat(10, 4.6vmin);
+}
+
+.game-board div {
+    border: 1px solid hsl(0, 0%, 100%, .2);
+}
+
+.game-board#computer > .taken {
+    background-color: hsl(200, 100%, 50%) !important;
+    border-radius: 0 !important;
+}
+
+.taken,
+.ship {
+    position: relative;
+    background-color: hsl(0, 0%, 80%);
+}
+
+.taken.start.horizontal,
+.taken.start.horizontal::before {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.taken.end.horizontal,
+.taken.end.horizontal::before {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.taken.start.vertical,
+.taken.start.vertical::before {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}
+
+.taken.end.vertical,
+.taken.end.vertical::before {
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.taken.vertical::before,
+.taken.horizontal::before {
+    content: '';
+    position: absolute;
+    border: 3vmin solid #fff;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+}
+
+.taken.horizontal::before {
+    animation: ripplesY 3s linear infinite;
+    border-left: none;
+    border-right: none;
+}
+
+.taken.taken.vertical::before {
+    animation: ripplesX 3s linear infinite;
+    border-top: none;
+    border-bottom: none;
+}
+
+@keyframes ripplesX {
+    0% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleX(1.5);
+    }
+}
+
+@keyframes ripplesY {
+    0% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleY(1.5);
+    }
+}
+
+.options-container {
+    display: flex;
+}
+
+.ships > div {
+    width: 4.6vmin;
+    height: 4.6vmin;
+}
+
+.ship {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1vmin;
+    width: calc(4.6vmin * var(--width, 1));
+    height: calc(4.6vmin * var(--heigth, 1));
+    border-radius: 2.3vmin;
+}
+
+.ship.destroyer {
+    --width: 2;
+}
+
+.ship.submarine {
+    --width: 3;
+}
+
+.ship.cruiser {
+    --width: 3;
+}
+
+.ship.battleship {
+    --width: 4;
+}
+
+.ship.carrier {
+    --width: 5;
+}
+
+.btn {
+    background-color: hsl(30, 100%, 50%);
+    padding: .5rem 1rem;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2rem;
+    color: #333;
+}
+
+.miss,
+.boom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boom::after,
+.miss::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    width: 2vmin;
+    height: 2vmin;
+}
+
+.miss::after {
+    background-color: #fff;
+}
+
+.boom::after {
+    background-color: red;
+}
+
+.miss::before,
+.boom::before {
+    content: '';
+    position: absolute;
+    animation: hit .2s ease-out forwards;
+    border-width: .1vmin;
+    border-style: solid;
+    border-radius: 100%;
+    width: 2vmin;
+    height: 2vmin;
+}
+
+.miss::before {
+    border-color: #fff;
+}
+
+.boom::before {
+    border-color: red;
+}
+
+@keyframes hit {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(4);
+    }
+}

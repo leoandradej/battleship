@@ -9,6 +9,25 @@
     <title>Battleship</title>
 </head>
 <body>
-    
+    <header class="header">
+        <h1 class="title">BATTLESHIP</h1>
+        <div class="game-info">
+            <div class="info-text" data-display-info></div>
+            <div class="info-text" data-display-turn></div>
+        </div>
+    </header>
+    <div class="game-boards-container" data-game-boards-container></div>
+    <div class="options-container" data-ships-container>
+        <div class="ships">
+            <div class="ship destroyer" draggable="true"></div>
+            <div class="ship submarine" draggable="true"></div>
+            <div class="ship cruiser" draggable="true"></div>
+            <div class="ship battleship" draggable="true"></div>
+            <div class="ship carrier" draggable="true"></div>
+        </div>
+        <button class="btn rotate-ship">ROTATE SHIP</button>
+    </div>
+    <button class="btn start-btn">START GAME</button>
+
 </body>
 </html>
