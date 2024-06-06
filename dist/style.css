@@ -1,10 +1,17 @@
-.game-boards-container {
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.gameboards-container {
     display: flex;
     justify-content: center;
     width: 100%;
 }
 
-.game-board {
+.gameboard {
     margin: 2vmin;
     display: grid;
     background-color: hsl(200, 100%, 50%);
@@ -12,11 +19,11 @@
     grid-template-columns: repeat(10, 4.6vmin);
 }
 
-.game-board div {
+.gameboard div {
     border: 1px solid hsl(0, 0%, 100%, .2);
 }
 
-.game-board#computer > .taken {
+.gameboard#computer > .taken {
     background-color: hsl(200, 100%, 50%) !important;
     border-radius: 0 !important;
 }
@@ -102,6 +109,12 @@
     display: flex;
 }
 
+.ships {
+    height: 10rem;
+    display: flex;
+    align-items: center;
+}
+
 .ships > div {
     width: 4.6vmin;
     height: 4.6vmin;
@@ -111,29 +124,27 @@
     display: flex;
     flex-wrap: wrap;
     margin: 1vmin;
-    width: calc(4.6vmin * var(--width, 1));
-    height: calc(4.6vmin * var(--heigth, 1));
     border-radius: 2.3vmin;
 }
 
 .ship.destroyer {
-    --width: 2;
+    width: calc(4.6vmin * var(--width, 2));
 }
 
 .ship.submarine {
-    --width: 3;
+    width: calc(4.6vmin * var(--width, 3));
 }
 
 .ship.cruiser {
-    --width: 3;
+    width: calc(4.6vmin * var(--width, 3));
 }
 
 .ship.battleship {
-    --width: 4;
+    width: calc(4.6vmin * var(--width, 4));
 }
 
 .ship.carrier {
-    --width: 5;
+    width: calc(4.6vmin * var(--width, 5));
 }
 
 .btn {
