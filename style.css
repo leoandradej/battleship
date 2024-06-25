@@ -1,0 +1,266 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    font-family: "Dosis", sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.game-info {
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.turn {
+    font-weight: 700;
+}
+
+.gameboards-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.gameboard {
+    margin: 2vmin;
+    display: grid;
+    background-color: hsl(200, 100%, 50%);
+    grid-template-rows: repeat(10, 4.6vmin);
+    grid-template-columns: repeat(10, 4.6vmin);
+}
+
+.gameboard div {
+    border: 1px solid hsl(0, 0%, 100%, .2);
+}
+
+.gameboard#computer > .taken {
+    background-color: hsl(200, 100%, 50%) !important;
+    border-radius: 0 !important;
+}
+
+.taken,
+.ship {
+    position: relative;
+    background-color: hsl(0, 0%, 80%);
+}
+
+.start.horizontal,
+.start.horizontal::before {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.end.horizontal,
+.end.horizontal::before {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.start.vertical,
+.start.vertical::before {
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+}
+
+.end.vertical,
+.end.vertical::before {
+    border-bottom-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.gameboard#player > .vertical::before,
+.gameboard#player > .horizontal::before {
+    content: '';
+    position: absolute;
+    border: .3vmin solid #fff;
+    top: -1px;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+}
+
+.gameboard#player > .horizontal::before {
+    animation: ripplesY 3s linear infinite;
+    border-left: none;
+    border-right: none;
+}
+
+.gameboard#player > .vertical::before {
+    animation: ripplesX 3s linear infinite;
+    border-top: none;
+    border-bottom: none;
+}
+
+@keyframes ripplesX {
+    0% {
+        opacity: 1;
+        transform: scaleX(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleX(1.5);
+    }
+}
+
+@keyframes ripplesY {
+    0% {
+        opacity: 1;
+        transform: scaleY(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scaleY(1.5);
+    }
+}
+
+.options-container {
+    width: 50vw;
+    height: 25vh;
+    display: flex;
+    justify-content: center;
+}
+
+.ships {
+    height: 10rem;
+    display: flex;
+    align-items: center;
+}
+
+.ships > div {
+    width: 4.6vmin;
+    height: 4.6vmin;
+}
+
+.ship {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1vmin;
+    border-radius: 2.3vmin;
+}
+
+.ship.destroyer {
+    width: calc(4.6vmin * var(--width, 2));
+}
+
+.ship.submarine {
+    width: calc(4.6vmin * var(--width, 3));
+}
+
+.ship.cruiser {
+    width: calc(4.6vmin * var(--width, 3));
+}
+
+.ship.battleship {
+    width: calc(4.6vmin * var(--width, 4));
+}
+
+.ship.carrier {
+    width: calc(4.6vmin * var(--width, 5));
+}
+
+.btn {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background-color: hsl(30, 100%, 50%);
+    padding: .5rem 1rem;
+    outline: none;
+    border: none;
+    border-radius: .5rem;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2rem;
+    color: #333;
+    transition: 200ms ease-in-out;
+}
+
+.btn:hover {
+    background-color: hsl(30, 100%, 30%);
+}
+
+.miss,
+.boom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boom::after,
+.miss::after {
+    content: '';
+    position: absolute;
+    border-radius: 100%;
+    width: 2vmin;
+    height: 2vmin;
+}
+
+.miss::after {
+    background-color: #fff;
+}
+
+.boom::after {
+    background-color: red;
+}
+
+.miss::before,
+.gameboard#computer > .boom::before {
+    content: '';
+    position: absolute;
+    animation: hit .2s ease-out forwards;
+    border-width: .1vmin;
+    border-style: solid;
+    border-radius: 100%;
+    width: 1vmin;
+    height: 1vmin;
+}
+
+.miss::before {
+    background-color: #fff;
+}
+
+.gameboard#computer > .boom::before {
+    background-color: red;
+}
+
+.gameboard#player > .boom {
+    animation: boom .2s ease-out forwards;
+}
+
+@keyframes hit {
+    0% {
+        opacity: 1;
+        transform: scale(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(4);
+    }
+}
+
+@keyframes boom {
+    0% {
+        background-color: red;
+    }
+
+    100% {
+        background-color: hsl(0, 0%, 80%);
+    }
+}
