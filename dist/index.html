@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="icon/icon.png">
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800" rel="stylesheet">
     <script src="main.js" defer></script>
     <title>Battleship</title>
 </head>
@@ -12,8 +14,8 @@
     <header class="header">
         <h1 class="title">BATTLESHIP</h1>
         <div class="game-info">
-            <div class="info-text" data-display-info></div>
-            <div class="info-text" data-display-turn></div>
+            <div class="turn" data-display-turn></div>
+            <div class="info" data-display-info></div>
         </div>
     </header>
     <div class="gameboards-container" data-gameboards-container></div>
@@ -26,8 +28,10 @@
             <div id="4" class="ship carrier" draggable="true"></div>
         </div>
     </div>
-    <button class="btn rotate-ship">ROTATE SHIP</button>
-    <button class="btn start-btn">START GAME</button>
+    <div class="buttons-container">
+        <button class="btn rotate-ship">ROTATE SHIP</button>
+        <button class="btn start-btn">START GAME</button>
+    </div>
 
 </body>
 </html>

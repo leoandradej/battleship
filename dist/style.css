@@ -3,6 +3,32 @@ body {
     flex-direction: column;
     align-items: center;
     width: 100%;
+    font-family: "Dosis", sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.title {
+    font-size: 4rem;
+    font-weight: 700;
+}
+
+.game-info {
+    font-size: 1.25rem;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.turn {
+    font-weight: 700;
 }
 
 .gameboards-container {
@@ -34,48 +60,48 @@ body {
     background-color: hsl(0, 0%, 80%);
 }
 
-.taken.start.horizontal,
-.taken.start.horizontal::before {
+.start.horizontal,
+.start.horizontal::before {
     border-top-left-radius: 50%;
     border-bottom-left-radius: 50%;
 }
 
-.taken.end.horizontal,
-.taken.end.horizontal::before {
+.end.horizontal,
+.end.horizontal::before {
     border-top-right-radius: 50%;
     border-bottom-right-radius: 50%;
 }
 
-.taken.start.vertical,
-.taken.start.vertical::before {
+.start.vertical,
+.start.vertical::before {
     border-top-left-radius: 50%;
     border-top-right-radius: 50%;
 }
 
-.taken.end.vertical,
-.taken.end.vertical::before {
+.end.vertical,
+.end.vertical::before {
     border-bottom-left-radius: 50%;
     border-bottom-right-radius: 50%;
 }
 
-.taken.vertical::before,
-.taken.horizontal::before {
+.gameboard#player > .vertical::before,
+.gameboard#player > .horizontal::before {
     content: '';
     position: absolute;
-    border: 3vmin solid #fff;
+    border: .3vmin solid #fff;
     top: -1px;
     bottom: -1px;
     left: -1px;
     right: -1px;
 }
 
-.taken.horizontal::before {
+.gameboard#player > .horizontal::before {
     animation: ripplesY 3s linear infinite;
     border-left: none;
     border-right: none;
 }
 
-.taken.taken.vertical::before {
+.gameboard#player > .vertical::before {
     animation: ripplesX 3s linear infinite;
     border-top: none;
     border-bottom: none;
@@ -106,7 +132,10 @@ body {
 }
 
 .options-container {
+    width: 50vw;
+    height: 25vh;
     display: flex;
+    justify-content: center;
 }
 
 .ships {
@@ -148,14 +177,22 @@ body {
 }
 
 .btn {
+    font-size: 1.5rem;
+    font-weight: 600;
     background-color: hsl(30, 100%, 50%);
     padding: .5rem 1rem;
     outline: none;
     border: none;
+    border-radius: .5rem;
     text-decoration: none;
     cursor: pointer;
     border: 2rem;
     color: #333;
+    transition: 200ms ease-in-out;
+}
+
+.btn:hover {
+    background-color: hsl(30, 100%, 30%);
 }
 
 .miss,
@@ -183,23 +220,27 @@ body {
 }
 
 .miss::before,
-.boom::before {
+.gameboard#computer > .boom::before {
     content: '';
     position: absolute;
     animation: hit .2s ease-out forwards;
     border-width: .1vmin;
     border-style: solid;
     border-radius: 100%;
-    width: 2vmin;
-    height: 2vmin;
+    width: 1vmin;
+    height: 1vmin;
 }
 
 .miss::before {
-    border-color: #fff;
+    background-color: #fff;
 }
 
-.boom::before {
-    border-color: red;
+.gameboard#computer > .boom::before {
+    background-color: red;
+}
+
+.gameboard#player > .boom {
+    animation: boom .2s ease-out forwards;
 }
 
 @keyframes hit {
@@ -211,5 +252,15 @@ body {
     100% {
         opacity: 0;
         transform: scale(4);
+    }
+}
+
+@keyframes boom {
+    0% {
+        background-color: red;
+    }
+
+    100% {
+        background-color: hsl(0, 0%, 80%);
     }
 }

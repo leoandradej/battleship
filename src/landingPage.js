@@ -57,54 +57,70 @@ const initializePage = () => {
         const turnInfo = document.querySelector('[data-display-turn]');
 
         if (!gameBoard.gameOver) {
-            turnInfo.textContent = 'Computers Turn';
-            displayInfo.textContent = 'The Computer is thinking...';
+            turnInfo.textContent = 'COMPUTERS TURN';
+            displayInfo.textContent = 'COMPUTER IS THINKING...';
 
             setTimeout(() => {
-                let randomMove = Math.floor(Math.random() * gameBoard.gridCellSize * gameBoard.gridCellSize);
+                let randomMove;
+                
+                const generateRandomNumber = () => {
+                    let randomNumber = Math.floor(Math.random() * gameBoard.gridDimension);
+                
+                    if (gameBoard.movesAlreadyMade.indexOf(randomNumber) === -1) {
+                        gameBoard.movesAlreadyMade.push(randomNumber);
+                        randomMove = randomNumber;
+                    } else if (gameBoard.movesAlreadyMade.length === 100) {
+                        return;
+                    } else {
+                        generateRandomNumber();
+                    }
+                };
+
+                generateRandomNumber();
+
                 const playersGrid = document.querySelectorAll('#player div');
             
-                if (playersGrid[randomMove].classList.contains('taken') && playersGrid[randomMove].classList.contains('boom')) {
-                    computerTurn();
-                    return;
-                } else if (playersGrid[randomMove].classList.contains('taken') && !playersGrid[randomMove]. classList.contains('boom')) {
+                if (playersGrid[randomMove].classList.contains('taken') && !playersGrid[randomMove].classList.contains('boom')) {
                     playersGrid[randomMove].classList.add('boom');
-                    displayInfo.textContent = 'The Computer hit your ship!';
+                    displayInfo.textContent = 'COMPUTER HIT YOUR SHIP!';
                     let cellClasses = Array.from(playersGrid[randomMove].classList);
                     gameBoard.computer.hits.push(...cellClasses.filter(className => className !== 'cell' && className !== 'taken' && className !== 'boom'));
                     gameBoard.checkScore(gameBoard.computer.name, gameBoard.computer.hits, gameBoard.computer.sunkShips);
                 } else {
-                    displayInfo.textContent = 'Nothing hit this time.';
+                    displayInfo.textContent = 'NOTHING HIT THIS TIME';
                     playersGrid[randomMove].classList.add('miss');
                 }
             }, 3000);
 
             setTimeout(() => {
-                gameBoard.playerTurn = true;
-                turnInfo.textContent = 'Your Turn!';
-                displayInfo.textContent = 'Please make your move.';
-                const computersGrid = document.querySelectorAll('#computer div');
-                computersGrid.forEach(cell => cell.addEventListener('click', handleAttack)) 
+                if (!gameBoard.gameOver) {
+                    gameBoard.playerTurn = true;
+                    turnInfo.textContent = 'YOUR TURN';
+                    displayInfo.textContent = 'PLEASE MAKE YOUR MOVE';
+                    const computersGrid = document.querySelectorAll('#computer div');
+                    computersGrid.forEach(cell => {
+                        if (!cell.classList.contains('miss') && !cell.classList.contains('boom')) {
+                            cell.addEventListener('click', handleAttack);
+                        }
+                    });
+                }
             }, 6000)
         }
     }
 
     const handleAttack = (e) => {
         const displayInfo = document.querySelector('[data-display-info]');
-
         if (!gameBoard.gameOver) {
             if (e.target.classList.contains('taken')) {
                 e.target.classList.add('boom');
-                displayInfo.textContent = 'You hit the Computers ship!';
+                displayInfo.textContent = 'YOU HIT COMPUTERS SHIP!';
                 let cellClasses = Array.from(e.target.classList);
                 gameBoard.player.hits.push(...cellClasses.filter(className => className !== 'cell' && className !== 'taken' && className !== 'boom'));
                 gameBoard.checkScore(gameBoard.player.name, gameBoard.player.hits, gameBoard.player.sunkShips);
-                console.log('gb-hits', gameBoard.player.hits);
-                console.log('gb-sunk', gameBoard.player.sunkShips);
             }
         }
         if (!e.target.classList.contains('taken')) {
-            displayInfo.textContent = 'Nothing hit this time.';
+            displayInfo.textContent = 'NOTHING HIT THIS TIME';
             e.target.classList.add('miss');
         }
         gameBoard.playerTurn = false;
@@ -119,13 +135,15 @@ const initializePage = () => {
             const displayInfo = document.querySelector('[data-display-info]');
             const turnInfo = document.querySelector('[data-display-turn]');
             if (shipsContainer.children.length != 0) {
-                displayInfo.textContent = 'Please place all your ships first!';
+                displayInfo.textContent = 'PLEASE PLACE ALL YOUR SHIPS FIRST!';
             } else {
                 const computersGrid = document.querySelectorAll('#computer div');
+                const buttonsContainer = document.querySelector('.buttons-container');
                 computersGrid.forEach(cell => cell.addEventListener('click', handleAttack));
                 gameBoard.playerTurn = true;
-                turnInfo.textContent = 'Your Turn!';
-                displayInfo.textContent = 'The Game has Started';
+                turnInfo.textContent = 'YOUR TURN';
+                displayInfo.textContent = 'THE GAME HAS STARTED';
+                buttonsContainer.style.display = 'none';
             }
         }
     }
