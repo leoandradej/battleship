@@ -1,19 +1,23 @@
-import Player from "./player";
+const Player = require("./player");
 
 class Gameboard {
-    constructor() {
+    constructor(testMode = false) {
         this.gridDimension = 100;
         this.player = new Player('player');
         this.computer = new Player('computer');
-        this.createGameboard(this.player.name);
-        this.createGameboard(this.computer.name);
         this.angle = 0;
         this.draggedShip;
         this.notDropped;
         this.playerTurn;
         this.movesAlreadyMade = [];
         this.gameOver = false;
+    
+        if (!testMode) {
+            this.createGameboard(this.player.name);
+            this.createGameboard(this.computer.name);
+        }
     }
+    
 
     createGameboard(player) {
         const gameboardsContainer = document.querySelector('[data-gameboards-container]');
@@ -117,4 +121,4 @@ class Gameboard {
     }
 }
 
-export default Gameboard;
+module.exports = Gameboard;

@@ -1,5 +1,5 @@
-import Gameboard from './gameBoard';
-import Ship from './ship';
+const Gameboard = require('./gameBoard');
+const Ship = require('./ship');
 
 const destroyer = new Ship('destroyer', 2);
 const submarine = new Ship('submarine', 3);
